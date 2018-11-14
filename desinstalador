@@ -1,0 +1,89 @@
+#!/bin/bash
+###########################################################
+#                                                         #
+#                      Desinstalador                      #
+#                  Autor: Antonio Alemany                 #
+#                                                         #
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+#               Declaración de variables                  #
+#                                                         #
+###########################################################
+nombreUsuario=`who am i | cut -d' ' -f1`
+rutaFunciones="/usr/bin/buscador_funciones.sh"
+rutaBuscador="/usr/bin/buscador"
+rutaStrings="/home/$nombreUsuario/.Buscador/buscador_strings"
+rutaLogs="/home/$nombreUsuario/.Buscador/logs"
+
+
+
+###########################################################
+#                                                         #
+# Función desinstalarConfig comprueba si está instalada   #
+# la configuración. Si lo está, elimina los archivos y    #
+# directorios de la carpeta .Buscador dentro del home del #
+# usuario.                                                #
+#                                                         #
+###########################################################
+function desinstalarConfig() {
+
+    if [[ -s $rutaStrings || -d $rutaLogs ]]; then
+         echo "Desinstalando configuración."
+        rm -Rv /home/$nombreUsuario/.Buscador
+        desinstalado_conf=true
+        echo "Configuración desinstalada."
+    else
+        desinstalado_conf=true
+        echo "La configuración ya estaba desinstalada con anterioridad."
+    fi
+}
+
+
+
+###########################################################
+#                                                         #
+# Función desinstalarBase comprueba si está instalada la  #
+# base. Si lo está, elimina los archivos del programa     #
+# buscador, que estan dentro del directorio /usr/bin/     #
+#                                                         #
+###########################################################
+function desinstalarBase() {
+    if [[ -s $rutaFunciones || -s $rutaBuscador ]]; then
+        #Si no eres root no puedes ejecutar el script
+        if [ $USER != "root" ]; then
+        	echo "Se necesitan privilegios de administrador para la instalación de Buscador."
+        	exit 1
+        else
+            echo "Desinstalando base."
+            if [[ -s $rutaFunciones ]]; then
+	            rm -v $rutaFunciones
+    	    fi
+    	    if [[ -s $rutaBuscador ]]; then
+        	   rm -v $rutaBuscador
+            fi
+            if [ $? -eq 0 ]; then
+                desinstalado_base=true
+                echo "Base desinstalada."
+                desinstalarConfig
+            fi
+        fi
+    else
+        desinstalado_base=true
+        echo "La base ya estaba desinstalada con anterioridad."
+        desinstalarConfig
+    fi
+}
+
+desinstalarBase
+
+
+
+###########################################################
+#                                                         #
+#                   FIN DESINSTALACIÓN                    #
+#                                                         #
+###########################################################

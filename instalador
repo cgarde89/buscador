@@ -1,0 +1,87 @@
+#!/bin/bash
+###########################################################
+#                                                         #
+#                      Instalador                         #
+#          Autor: Cristian Garde, Tomeu Torres            #
+#                                                         #
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+#               Declaración de variables                  #
+#                                                         #
+###########################################################
+
+nombreUsuario=`who am i | cut -d' ' -f1`
+rutaFunciones="/usr/bin/buscador_funciones.sh"
+rutaBuscador="/usr/bin/buscador"
+rutaStrings="/home/$nombreUsuario/.Buscador/buscador_strings"
+rutaLogs="/home/$nombreUsuario/.Buscador/logs"
+
+
+
+###########################################################
+#                                                         #
+# Función instalarConfig comprueba si está instalada la   #
+# configuración. Si no lo está, crea los archivos y       #
+# directorios necesarios para ello.                       #
+#                                                         #
+###########################################################
+function instalarConfig() {
+
+    if [[ -s $rutaStrings && -d $rutaLogs ]]; then
+        instalado_conf=true
+        echo "La configuración ya estaba instalada con anterioridad."
+    else
+        echo "Instalando configuración."
+        mkdir -vp $rutaLogs
+        cp -v "bin/buscador_strings" $rutaStrings
+        echo "Configuración instalada."
+        chown -R $nombreUsuario:$nombreUsuario /home/$nombreUsuario/.Buscador
+        instalado_conf=true
+    fi
+}
+
+
+###########################################################
+#                                                         #
+# Función instalarBase comprueba si está instalada la     #
+# base. Si no lo está, crea los archivos necesarios para  #
+# poder ejecutar el programa buscador dentro de /usr/bin. #
+#                                                         #
+###########################################################
+function instalarBase() {
+    if [[ -s $rutaFunciones && -s $rutaBuscador ]]; then
+        instalado_base=true
+        echo "La base ya estaba instalada con anterioridad."
+        instalarConfig
+    else
+        #Si no eres root no puedes ejecutar el script
+        if [ $USER != "root" ]; then
+        	echo "Se necesitan privilegios de administrador para la instalación de Buscador."
+        	exit 1
+        else
+            echo "Instalando base."
+            cp -v "bin/buscador_funciones.sh" $rutaFunciones
+            cp -v "bin/buscador" $rutaBuscador
+            if [ $? -eq 0 ]; then
+                chmod +x $rutaFunciones
+                chmod +x $rutaBuscador
+                instalado_base=true
+                echo "Base instalada."
+                instalarConfig
+            fi
+        fi
+    fi
+}
+instalarBase
+
+
+
+###########################################################
+#                                                         #
+#                    FIN INSTALACIÓN                      #
+#                                                         #
+###########################################################

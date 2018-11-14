@@ -1,0 +1,96 @@
+###########################################################
+#                                                         #
+#                   Codigos de errores                    #
+#                 Autor: Antonio Alemany                  #
+#                                                         #
+###########################################################
+
+
+###########################################################
+# Leyenda:                                                #
+# \e[21m --> Normal, \e[1m --> Negrita                    #
+# \e[24m --> Normal, \e[24m --> Subrayado                 #
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+#               Errores sección buscador                  #
+#                                                         #
+###########################################################
+1:Base instalada.
+2:Instalando base.
+3:Instalando configuración.
+
+
+
+###########################################################
+#                                                         #
+#               Errores sección opciones                  #
+#                                                         #
+###########################################################
+50:Opción desconocida.
+
+
+
+###########################################################
+#                                                         #
+#                    Errores bucles:                      #
+#                                                         #
+###########################################################
+100:\tSe necesitan privilegios de administrador para la instalación de Buscador.
+
+
+
+###########################################################
+#                                                         #
+#           Errores sección buscador_funciones            #
+#                                                         #
+###########################################################
+200:Se ha introducido una combinación de opciones incompatibles.
+201:Alguno o algunos resultados podrían haberse omitido;
+202:Búsqueda finalizada correctamente.
+203:Error al ejecutar -s o -t. ¡Tamaño definido inválido!\nPara más información utilice buscador --help
+204:Puede deberse a la falta de privilegios en el directorio donde se ha realizado la búsqueda.
+205:Log guardado correctamente.
+
+
+
+###########################################################
+#                                                         #
+#                    Sección ayuda                        #
+#                                                         #
+###########################################################
+300:\e[1mbuscador \e[21m[string a buscar] [-opciones]
+301:
+302:\e[1m\e[4mOpciones\e[24m
+303:
+304:    -d, --directorios, --directories   \e[21mBúsqueda solo de directorios.
+305:
+306:    \e[1m-e, --extension   \e[21mBúsqueda por extensión. Requiere obligatoriamente parámetro (extensión).
+307:
+308:    \e[1m-f, --ficheros, --files   \e[21mBúsqueda de sólo ficheros.
+309:
+310:    \e[1m-h, --ocultos, --hidden   \e[21mBúsqueda de ficheros y directorios ocultos.
+311:
+312:    \e[1m-H, --ayuda, --help   \e[21mMuestra guía de uso.
+313:
+314:    \e[1m-i, --ignorar, --ignore   \e[21mArchivo que ignora en la búsqueda.
+315:
+316:    \e[1m-L, --historial, --log   \e[21mRegistrar en un log el resultado de la búsqueda e indicar dónde se guarda que es dentro de /home/usuario/.Buscador/logs/
+317:
+318:    \e[1m-s, -t n[bckwMG]  \e[21mBúsqueda por tamaño. Los ficheros emplean (están formados de) unidades de espacio. Pueden utilizarse los siguientes sufijos:
+319:        ‘b’ 	para los bloques de de 512 bytes (este es valor por defecto si no se utiliza ningún sufijo)
+320:        ‘c’ 	para bytes
+321:        ‘w’ 	para palabras de dos bytes
+322:        ‘k’ 	para kilobytes (unidades de 1024 bytes)
+323:        ‘M’	    para Megabytes (unidades de 1048576 bytes)
+324:        ‘G’	    para Gigabytes (unidades de 1073741824 bytes)
+325:
+326:        \e[1m\e[4mComparaciones\e[24m
+327:        \e[21m‘+n’    para mayor que n
+328:        ‘-n’    para menor que n
+329:        ‘n’     para exactamente n
+330:
+331:    \e[1m-u, -l, --ubicacion, --location   \e[21mBuscar a partir de cierto directorio y sus subdirectorios.

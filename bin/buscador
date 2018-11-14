@@ -1,0 +1,15 @@
+#!/bin/bash
+# Buscador.sh
+# Autores: Antonio Alemany, Cristian Garde, Tomeu Torres
+
+## Carga de libreria buscador_funciones
+# PRODUCCION
+. /usr/bin/buscador_funciones.sh
+#. ./buscador_funciones.sh
+
+## Comprueba si $1 esta vacío, si lo está, ejecuta la ayuda
+if [[ $1x = x ]]; then # Si no se pasa ninguna opción, por defecto mostrará la ayuda de la herramienta
+    ayuda
+else
+    comprobacion_sintaxis $@
+fi
